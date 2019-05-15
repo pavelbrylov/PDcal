@@ -39,6 +39,20 @@ function main() {
 	var calColors = {};
 	var events = [];
 	var peopleColors = {};
+	
+	peopleColors['Glenn van Stipdonk'] = '#9932cc';
+	peopleColors['Sander van Kemenade'] = '#1f1fff';
+	peopleColors['Marcin Dzwonkowicz'] = '#e6284f';
+	peopleColors['Federico Evers'] = '#9a3720';
+
+	peopleColors['Antonio Reuter'] = '#9946e6';
+	peopleColors['Akhil Dhawan'] = '#9946e6';
+	peopleColors['Aykut Aras'] = '#00d198';
+	peopleColors['Jakub Jantosik'] = '#9a3720';
+	peopleColors['Jasper Wintermans'] = '#ff1f1f';
+	peopleColors['Romain Lussier'] = '#ffb01f';
+
+
 	var outstanding_requests = 0;
 	
 	urls.forEach(function(url, index) {
@@ -78,42 +92,61 @@ function main() {
 						title: title,
 						start: startdate,
 						end: enddate,
-						color: urls.length > 1 ? calColors[calName] : peopleColors[title],
+						//color: urls.length > 1 ? calColors[calName] : peopleColors[title],
+						color: peopleColors[title],
 						weburl: event._firstProp("url")
 					});
 				});
 				
 				if (outstanding_requests == 0) {
 					$('.busy').hide();
-					var headline = '<h1 style="background-color: #f0f0f0">';
-					if ( calNames.length == 1 ) {
-						headline += calNames[0];
-						headline += '</h1><br>';
-					} else {
-						headline += 'On Call Schedules for: </h1><h3 style="background-color: #f0f0f0">';
-						var calNamesHTML = calNames.map(function(calName, index) {
-							return '<div style="background-color: ' + calColors[calName] + '; border-radius: 10px; width: 30px; display: inline-block">&nbsp;&nbsp;</div> ' + calName.replace(/On Call Schedule for /, '');
-						});
-						headline += calNamesHTML.join('<br>');
-						headline += '</h3><br>';
-					}
-					$('#calendar-title').html(headline);
-					document.title = calNames.join(', ');
-					$('#calendar').fullCalendar({
+					document.title = "PagerDuty";
+
+					var calendarEl = document.getElementById('calendar');
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						plugins: [ 'dayGrid' ],
 						events: events,
-						defaultView: getParameterByName("view") ? getParameterByName("view") : "month",
-						header: {
-						    left:   'title',
-						    center: 'month,agendaWeek,agendaDay,listMonth',
-						    right:  'today prev,next'
+						header: false,
+						height: 700,
+						weekNumberCalculation: "ISO",
+						defaultView: "fourweeks",
+						views: {
+							fourweeks: {
+								type: "dayGrid",
+								duration: { weeks: 4},
+							}
 						},
-						eventMouseover: function() {
-							$(this)[0].style.cursor = "pointer";
-						},
-						eventClick: function(calEvent) {
-							window.open(calEvent.weburl, "_blank");
-						}
-					});
+						eventTimeFormat: {
+							hour: 'numeric',
+							minute: '2-digit',
+							meridiem: false
+						  }
+					  });
+			  
+					calendar.render();
+
+					// $('#calendar').FullCalendar({
+					// 	events: events,
+					// 	//defaultView: getParameterByName("view") ? getParameterByName("view") : "month",
+					// 	defaultView: "fourweeks",
+					// 	header: {
+					// 	    left:   'title',
+					// 	    center: 'month,agendaWeek,agendaDay,listMonth',
+					// 	    right:  'today prev,next'
+					// 	},
+					// 	views: {
+					// 		fourweeks: {
+					// 			type: "dayGrid",
+					// 			duration: { days: 4}
+					// 		}
+					// 	},
+					// 	eventMouseover: function() {
+					// 		$(this)[0].style.cursor = "pointer";
+					// 	},
+					// 	eventClick: function(calEvent) {
+					// 		window.open(calEvent.weburl, "_blank");
+					// 	}
+					// });
 				}
 			}
 		});
