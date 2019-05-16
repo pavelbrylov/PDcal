@@ -34,3 +34,8 @@ body {
 	background-color: #ccc;
 	font-size: 18px;
 }
+
+.fc-event {
+	font-size: 2em;
+	font-weight: bold;
+}

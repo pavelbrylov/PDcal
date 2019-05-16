@@ -39,18 +39,18 @@ function main() {
 	var calColors = {};
 	var events = [];
 	var peopleColors = {};
-	
-	peopleColors['Glenn van Stipdonk'] = '#9932cc';
-	peopleColors['Sander van Kemenade'] = '#1f1fff';
-	peopleColors['Marcin Dzwonkowicz'] = '#e6284f';
-	peopleColors['Federico Evers'] = '#9a3720';
+	//Copied colors used in PagerDuty overview
+	peopleColors['Glenn'] = '#9932cc';
+	peopleColors['Sander'] = '#1f1fff';
+	peopleColors['Marcin'] = '#e6284f';
+	peopleColors['Federico'] = '#9a3720';
 
-	peopleColors['Antonio Reuter'] = '#9946e6';
-	peopleColors['Akhil Dhawan'] = '#9946e6';
-	peopleColors['Aykut Aras'] = '#00d198';
-	peopleColors['Jakub Jantosik'] = '#9a3720';
-	peopleColors['Jasper Wintermans'] = '#ff1f1f';
-	peopleColors['Romain Lussier'] = '#ffb01f';
+	peopleColors['Antonio'] = '#9946e6';
+	peopleColors['Akhil'] = '#9946e6';
+	peopleColors['Aykut'] = '#00d198';
+	peopleColors['Jakub'] = '#9a3720';
+	peopleColors['Jasper'] = '#ff1f1f';
+	peopleColors['Romain'] = '#ffb01f';
 
 
 	var outstanding_requests = 0;
@@ -79,7 +79,7 @@ function main() {
 				var vevents = comp.getAllSubcomponents("vevent");
 				vevents.forEach(function(vevent) {
 					var event = new ICAL.Event(vevent);
-					var title = event.summary.replace(/^On Call - /g, '');
+					var title = event.summary.replace(/^On Call - /g, '').split(" ")[0];
 					title = title.replace(/ - .*$/, '');
 					if ( ! peopleColors[title] ) {
 						peopleColors[title] = colors[Math.floor(Math.random() * colors.length)];
@@ -107,7 +107,7 @@ function main() {
 						plugins: [ 'dayGrid' ],
 						events: events,
 						header: false,
-						height: 700,
+						height: 800,
 						weekNumberCalculation: "ISO",
 						defaultView: "fourweeks",
 						views: {
@@ -119,7 +119,8 @@ function main() {
 						eventTimeFormat: {
 							hour: 'numeric',
 							minute: '2-digit',
-							meridiem: false
+							meridiem: false,
+							hour12: false
 						  }
 					  });
 			  
