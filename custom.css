@@ -1,0 +1,8 @@
+.fc-event {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.fc-today {
+    background: rgb(168, 190, 250) !important;
+} 
