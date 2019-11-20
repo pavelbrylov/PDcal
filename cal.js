@@ -106,7 +106,11 @@ function main() {
 					var calendar = new FullCalendar.Calendar(calendarEl, {
 						plugins: [ 'dayGrid' ],
 						events: events,
-						header: false,
+						header: {
+							left:   'title',
+							center: '',
+							right:  'today prev,next'
+						},
 						height: 800,
 						weekNumberCalculation: "ISO",
 						defaultView: "fourweeks",
